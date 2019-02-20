@@ -1,0 +1,151 @@
+
+html{font-size: 32px;}
+body{margin:0;min-width: 320px}
+ul,ol{
+    list-style: none;
+    padding: 0;margin: 0;
+}
+*{font-weight:normal;padding: 0;margin: 0;
+box-sizing: border-box}
+
+a{text-decoration: none;color:inherit}
+
+header{
+    width: 100%;
+    padding-top: .0357rem;
+    height: 2.3rem;
+    line-height:2.3rem;
+    background: #2ca2f9;
+
+
+
+}
+.hearder_top{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    border: 0;
+    background: #ffffff;
+    height: 148px;
+    z-index: 2;
+}
+.logo{
+    width: 4rem;
+    height: 1.27857rem;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: .3143rem;
+    background: url(../images/logo.png) no-repeat;
+    background-size: 100%;
+}
+.down{
+    width: 3.3rem;
+    height: 1.143rem;
+    line-height: 1.143rem;
+    margin-left: .3143rem;
+    border: 1px solid #fff;
+    border-radius: .3571rem;
+    text-align: center;
+    color: #fff;
+    font-size: .4871rem;
+    display: inline-block;
+    position: relative;
+    top: -6px;
+    left: -5px;
+}
+#app{
+    padding-top: 150px;
+}
+.search{
+    width: .8143rem;
+    height: 1.2143rem;
+    background: url(../images/search.png) no-repeat;
+    background-size: 100%;
+    position: absolute;
+    top: .69rem;
+    right: .7143rem;
+    cursor: pointer;
+}
+
+main{
+    width: 100%;
+    background: #fff;
+    height: 2.2143rem;
+    line-height: 2rem;
+    box-shadow: 0 0.1785rem 0.1785rem 0 #f4f4f4;
+
+}
+main ul{
+    width: 100%;
+    padding: 0 .7143rem;
+    display: -webkit-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+main ul li{
+    width: 20%;
+    text-align: center;
+    -webkit-box-flex: 1;
+}
+main ul li a{
+    border-bottom: .2143rem solid #fff;
+    display: block;
+    color: #333;
+    font-size: .67rem;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
+}
+main ul .cur a{
+    border-bottom: .2143rem solid #33a3f5;
+}
+
+.list{padding:0 10px;}
+.list li{
+    width: 100%;
+    height: 4.5714rem;
+    border-bottom: 1px solid #e5e5e5;
+    position: relative;
+}
+
+.list li:after{
+    content: "";
+    display: inline-block;
+    height: inherit;
+    width: 1px;
+    vertical-align: middle;
+}
+.list li span{
+    font-size: 20px;
+    width: 80%;
+    vertical-align: middle;
+    position: relative;
+    top:-60px;
+    left:10px;
+    color: #333;
+}
+.list li .ig{
+    height:125px;
+    width:125px;
+    margin-top:10px;
+    display: inline-block;
+}
+
+.list li img{
+    height:100%;
+    width:100%;
+}
+
+.icon{
+    width: .35rem;
+    height: 1rem;
+    margin-top: -.5rem;
+    position: absolute;
+    top: 50%;
+    right: .3143rem;
+    display: block;
+    background: url(../images/arrow_icon.png) no-repeat;
+    background-size: 100%;
+}

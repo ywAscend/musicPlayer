@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="javascripts/jquery-3.3.1.js"></script>
+    <script src="javascripts/vue.js"></script>
+    <style>
+
+        html{font-size: 32px;}
+        body{margin:0;min-width: 320px}
+        ul,ol{
+            list-style: none;
+            padding: 0;margin: 0;
+        }
+        *{font-weight:normal;padding: 0;margin: 0;
+            box-sizing: border-box}
+
+        a{text-decoration: none;color:inherit}
+
+        header{
+            width: 100%;
+            padding-top: .0357rem;
+            height: 2.3rem;
+            line-height:2.3rem;
+            background: #2ca2f9;
+            position: relative;
+        }
+        .hearder_top{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            border: 0;
+            background: #ffffff;
+            height: 75px;
+            z-index: 9;
+
+        }
+
+
+        .logo{
+            width: 4rem;
+            height: 1.27857rem;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: .3143rem;
+            background: url(images/logo.png) no-repeat;
+            background-size: 100%;
+        }
+        .down{
+            width: 3.3rem;
+            height: 1.143rem;
+            line-height: 1.143rem;
+            margin-left: .3143rem;
+            border: 1px solid #fff;
+            border-radius: .3571rem;
+            text-align: center;
+            color: #fff;
+            font-size: .4871rem;
+            display: inline-block;
+            position: relative;
+            top: -6px;
+            left: -5px;
+        }
+        .search{
+            width: .8143rem;
+            height: 1.2143rem;
+            background: url(images/search.png) no-repeat;
+            background-size: 100%;
+            position: absolute;
+            top: .69rem;
+            right: .7143rem;
+            cursor: pointer;
+        }
+
+        .wt{
+            top:0;
+            padding:5px;
+            height:auto;
+            width: 100%;
+            margin-top:75px ;
+            position: fixed;
+            z-index: 9;
+            border-bottom: 1px solid #eee;
+            background: white;
+        }
+        .go_back{
+            width: 15px;
+            height: 25px;
+            display: inline-block;
+            background:  url(images/goback.png) no-repeat;
+            background-size: cover;
+            margin-top:10px;
+            float:left;
+            margin-left:10px;
+
+
+
+        }
+        .kb{display: inline-block;
+            font-size:18px;
+            line-height: 40px;
+            width:75%;
+            text-align: center;
+            position: relative;
+            top:-5px;
+        }
+
+        .img_box{
+            width: 100%;
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .img_box img{
+            width:100%;
+        }
+
+        .kt{
+            font-size:16px; line-height: 40px; color:white;margin-top:115px;
+
+        }
+
+        .list{padding:0 10px; margin-top:134px;
+        }
+        .list li{
+            width: 100%;
+            height: 3.32rem;
+            border-bottom: 1px solid #e5e5e5;
+            position: relative;
+        }
+
+        .list li:after{
+            content: "";
+            display: inline-block;
+            height: inherit;
+            width: 1px;
+            vertical-align: middle;
+        }
+        .list li span{
+            font-size: 20px;
+            display: inline-block;
+            vertical-align: top;
+            margin:0 0 0 5px;
+            position: relative;
+            top:36px;
+        }
+
+        .icon{
+            width: .5357rem;
+            height: .5814rem;
+            display: inline-block;
+            background: url(images/download_icon_2.png) no-repeat;
+            background-size: 100%;
+            float:right;
+            margin-top:30px
+        }
+
+        .list li  .num{
+
+            height:30px;
+            line-height: 30px;
+            width:30px;
+            float:left;
+            text-align: center;
+            margin-top:27px ;
+        }
+
+        .list li:nth-child(1) .num{
+            background: #ff0000;
+            border-radius: 10px;
+        }
+        .list li:nth-child(2) .num{
+            background: rgba(255, 69, 0, 0.8);
+            border-radius: 10px;
+        }
+        .list li:nth-child(3) .num{
+            background: #ffcc44;
+            border-radius: 10px;
+        }
+        .st_img{
+            display: inline-block;
+            height:80px;
+            width:80px;
+            margin-top:12px;
+        }
+        .st_img img{
+            height:100%;
+            width:100%;
+        }
+        /*数据加载*/
+        .circle_icon{
+            height:50px;
+            line-height: 50px;
+            width:150px;
+            font-size: 14px;
+            position: absolute;
+            top:315px;
+            z-index: 1;
+            left:120px;
+        }
+
+        .circle_icon img{
+            position: relative;
+            top:10px;
+            margin-right: 10px;
+        }
+
+    </style>
+
+
+</head>
+<body>
+<div class="hearder_top" id="header_top">
+    <v-header></v-header>
+</div>
+<script src="javascripts/header.js"></script>
+<div class="bd" id="bd">
+    <div class="wt">
+        <i class="go_back" onclick="history.go(-1)"></i>
+        <p v-text="kb" class="kb"></p>
+
+    </div>
+
+    <!--歌手列表-->
+    <ul class="list" > <!--给list加id 在下面让vue-实例绑定-->
+        <li v-for="lis in singers">
+            <a :href="'/msingerList.html?singerid='+lis.singerid">
+            <div class="st_img"><img :src="lis.imgurl|replace" /></div>
+            <span v-text="lis.singername" ></span>
+            </a>
+        </li>
+    </ul>
+
+</div>
+<div class="circle_icon"><img src="images/5-121204193R5-50.gif" alt=""/><span>数据加载中...</span></div>
+
+<script>
+    var id=location.search.split("=")[1];//获取id
+    console.log(id);
+    $(".bd").hide();
+    $.ajax({
+        url:"/ma",
+        data:{urls:"http://m.kugou.com/singer/list/"+id+"?json=true" },
+        success:function(data){
+            $(".circle_icon").hide();
+            $(".bd").show();
+            console.log(data);
+
+            new Vue({
+                el:"#bd",
+                data:{kb:data.classname,singers:data.singers.list.info},
+                filters:{
+                    replace:function(da){
+                        return da.replace("{size}",400)
+                    }
+                }
+
+            })
+
+        }
+
+    });
+
+
+</script>
+
+
+
+</body>
+</html>

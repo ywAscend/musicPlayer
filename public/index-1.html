@@ -1,0 +1,253 @@
+<html>
+
+<head>
+  <title>Express</title>
+  <link rel="stylesheet" href="/stylesheets/index.css">
+  <!--引用swiper css样式-->
+  <link rel="stylesheet" href="stylesheets/swiper.min.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="javascripts/jquery-3.3.1.js"></script>
+  <script src="javascripts/vue.js"></script>
+  <!--引用swiper js文件-->
+  <script src="javascripts/swiper.min.js"></script>
+  <style>
+
+    /*数据加载*/
+    .circle_icon{
+      height:50px;
+      line-height: 50px;
+      width:150px;
+      font-size: 14px;
+      position: absolute;
+      top:315px;
+      z-index: 1;
+      left:120px;
+    }
+
+    .circle_icon img{
+      position: relative;
+      top:10px;
+      margin-right: 10px;
+    }
+    .cur{
+      border-bottom: .2143rem solid #33a3f5;
+    }
+/*音乐播放器*/
+    #uplay{
+      display: none;
+      position: relative;
+    }
+    .user_play{
+      height:80px;
+      width:100%;
+      background:rgba(0,0,0,.8);
+      position: fixed;
+      bottom:0;
+    }
+    .user_play .user_img{
+      height:80px;
+      width:100px;
+      float:left;
+      padding: 5px;
+
+    }
+    .user_img img{
+      height:100%;
+      width:100%;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+    }
+
+    .songName_box{
+      float:left;
+      margin-left:5px;
+      height:inherit;
+      padding-top:15px;
+    }
+    .songName_box p{
+      color:#fff;
+      font-size:16px;
+      line-height: 30px;
+    }
+    .songName_box .singerName{
+      font-size:12px;
+      color: #d0d0d0;
+    }
+    .icon_box{
+      float:right;
+      height:80px;
+      width:150px;
+      padding: 18px 0 0 10px;
+      position: absolute;
+      right: 0;
+
+    }
+
+    .icon_box i{
+      display: inline-block;
+      height:40px;
+      width:38px;
+
+    }
+    .icon_box .play_icon{
+      background: url("images/pause_icon.png")no-repeat;
+      background-size:100%;
+    }
+    .icon_box .pause_icon{
+      background: url("images/play_icon.png")no-repeat;
+      background-size:100%;
+    }
+
+    .icon_box .next_icon{
+      background:  url("images/next_icon.png")no-repeat;
+      background-size:100%;
+    }
+    .icon_box .download_icon{
+      background:url("images/download_icon.png")no-repeat;
+      background-size:100%;
+    }
+
+
+  </style>
+
+</head>
+
+<body>
+<div class="hearder_top" id="header_top">
+  <v-header></v-header>
+  <v-main></v-main>
+</div>
+
+<script src="javascripts/header.js"></script>
+
+
+<div id="app" ><!--view dom-->
+
+<!-- Swiper -->
+<div class="swiper-container">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide" v-for="baner in maData">
+      <a :href="baner.extra.tourl"><img :src="baner.imgurl" /></a>
+    </div>
+  </div>
+  <!-- Add Pagination -->
+  <div class="swiper-pagination"></div>
+</div>
+</div>
+<!--新歌列表-->
+
+<ul class="list" id="list"> <!--给list加id 在下面让vue-实例绑定-->
+  <li v-for="lis in listData">
+   <span v-text="lis.filename" v-on:click="uPlay(lis.hash)"></span>
+    <i class="icon"></i>
+  </li>
+</ul>
+
+<div class="circle_icon"><img src="images/5-121204193R5-50.gif" alt=""/><span>数据加载中...</span></div>
+
+<!--播放器 uplay-->
+<div id="uplay">
+  <div class="user_play">
+    <div class="user_img">
+      <img :src="Song.imgUrl|replace"/>
+    </div>
+    <div class="songName_box">
+      <p class="songName" v-text="Song.songName"></p>
+      <p class="singerName" v-text="Song.choricSinger"></p>
+    </div>
+    <div class="icon_box">
+        <i class="play_icon"></i>
+        <i class="next_icon"></i>
+        <i class="download_icon"></i>
+        <audio :src="Song.url" autoplay></audio>
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+$(".list").hide();
+  //1.获取banner数据
+  $.ajax({
+    url:"/ma",
+    data:{urls:"http://m.kugou.com/?json=true"},
+    success:function(data){
+      $(".circle_icon").hide();
+      $(".list").show();
+      console.log(data);//获取音乐接口数据
+      //加载vue实例
+      new Vue({
+        el:"#app",//绑定数据给视图
+        data:{maData:data.banner}
+      });
+      //vue实例加载完以后，才加载swiper 这样 避免只显示一张图片
+      var swiper = new Swiper('.swiper-container', {
+        pagination: {
+          el: '.swiper-pagination'
+        },
+      });
+      var SongData={Song:{choricSinger:"",imgUrl:"",songName:"",url:""}};
+
+      /*播放器*/
+      new Vue({
+        el:"#uplay",
+        data:SongData, //把歌曲信息传入 uplay视图中
+        filters:{
+          replace:function(dts){
+            return dts.replace("{size}",400)
+          }
+        }
+      });
+
+      $(".play_icon").click(function(){
+        if($(this).hasClass("pause_icon")){
+          $(this).removeClass("pause_icon");
+          $("audio")[0].play();
+        }else{
+          $("audio")[0].pause();
+          $(this).addClass("pause_icon");
+        }
+
+      });
+
+      new Vue({
+        el:"#list",
+        data:{listData:data.data}, // data.data里面包含新歌的列表
+        methods:{
+          uPlay:function(da){
+            console.log(da); //获取 url 中的hash值
+            $.ajax({
+              url:"/ma",
+              data:{urls:"http://m.kugou.com/app/i/getSongInfo.php?cmd=playInfo&hash="+da},
+              success:function(dt){
+                console.log(dt);
+                  SongData.Song=dt;//把歌曲信息存如SongData.song中
+                  $("#uplay").show();
+                  $(".play_icon").removeClass("pause_icon");
+              }
+            })
+          }
+        }
+      });
+
+
+
+    }
+
+  });
+
+
+
+
+</script>
+
+
+
+</body>
+
+
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>歌手</title>
+    <link rel="stylesheet" href="/stylesheets/public.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="javascripts/jquery-3.3.1.js"></script>
+    <script src="javascripts/vue.js"></script>
+    <style>
+        .list{margin-top:20px;}
+        .list:first-child{
+            margin-top:10px;
+        }
+        .list li{
+            border:1px solid #e6e6e6;
+            background: #fcfcfc;
+            height:50px;
+            line-height: 50px;
+            border-radius: 5px;
+        }
+        .list li span{ top:-5px;font-size: 18px;}
+        .list li .icon{ height: 0.68rem;top:27px;}
+
+        .cur{
+            border-bottom: .2143rem solid #33a3f5;
+        }
+        /*数据加载*/
+        .circle_icon{
+            height:50px;
+            line-height: 50px;
+            width:150px;
+            font-size: 14px;
+            position: absolute;
+            top:315px;
+            z-index: 1;
+            left:120px;
+        }
+
+        .circle_icon img{
+            position: relative;
+            top:10px;
+            margin-right: 10px;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="hearder_top" id="header_top">
+    <v-header></v-header>
+    <v-main></v-main>
+</div>
+<script src="javascripts/header.js"></script>
+<div id="app" >
+    <!--歌单列表-->
+    <ul class="list"  v-for="u in listData"> <!--给list加id 在下面让vue-实例绑定-->
+        <li v-for="li in u">
+            <a :href="'/singerList.html?classid='+li.classid">
+                <span v-text="li.classname"></span>
+                <i class="icon"></i>
+            </a>
+
+        </li>
+    </ul>
+
+</div>
+
+<script>
+    $(".list").hide();
+    //1.获取排行榜数据
+    $.ajax({
+        url:"/ma",
+        data:{urls:"http://m.kugou.com/singer/class&json=true"},
+        success:function(da){
+            $(".circle_icon").hide();
+            $(".list").show();
+            console.log(da);//获取音乐接口数据
+
+            var arr=[];
+            function abc(data,txt){
+                var arr2=[];
+                var n;
+                for(var i=0;i<data.length;i++){
+                    if(data[i].classname.slice(0,2)==txt){
+                        n=i;
+                        arr2.push(data[i]);
+                    }
+                }
+                arr.push(arr2);
+                n++;
+                if(data[n]){
+                    abc(da.list,da.list[n].classname.slice(0,2));
+                }
+
+            }
+            abc(da.list,da.list[0].classname.slice(0,2));
+
+            console.log(arr)
+
+            //加载vue实例
+            new Vue({
+                el:"#app",
+                data:{listData:arr} // data.data里面包含新歌的列表
+
+            })
+
+        }
+
+    });
+
+</script>
+
+</body>
+</html>

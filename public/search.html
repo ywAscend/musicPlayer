@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="javascripts/vue.js"></script>
+    <script src="javascripts/jquery-3.3.1.js"></script>
+    <style>
+        html{font-size: 32px;}
+        body{margin:0;min-width: 320px}
+        ul,ol{
+            list-style: none;
+            padding: 0;margin: 0;
+        }
+        *{font-weight:normal;padding: 0;margin: 0;
+            box-sizing: border-box}
+
+        a{text-decoration: none;color:inherit}
+
+        header{
+            width: 100%;
+            padding-top: .0357rem;
+            height: 2.3rem;
+            line-height:2.3rem;
+            background: #2ca2f9;
+            position: relative;
+        }
+        .hearder_top{
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            border: 0;
+            background: #ffffff;
+            height: 75px;
+            z-index: 9;
+
+        }
+
+
+        .logo{
+            width: 4rem;
+            height: 1.27857rem;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: .3143rem;
+            background: url(images/logo.png) no-repeat;
+            background-size: 100%;
+        }
+        .down{
+            width: 3.3rem;
+            height: 1.143rem;
+            line-height: 1.143rem;
+            margin-left: .3143rem;
+            border: 1px solid #fff;
+            border-radius: .3571rem;
+            text-align: center;
+            color: #fff;
+            font-size: .4871rem;
+            display: inline-block;
+            position: relative;
+            top: -6px;
+            left: -5px;
+        }
+        .search{
+            width: .8143rem;
+            height: 1.2143rem;
+            background: url(images/search.png) no-repeat;
+            background-size: 100%;
+            position: absolute;
+            top: .69rem;
+            right: .7143rem;
+            cursor: pointer;
+        }
+
+        .wt{
+            top:0;
+            padding:5px;
+            height:auto;
+            width: 100%;
+            margin-top:75px ;
+            position: fixed;
+            z-index: 9;
+            border-bottom: 1px solid #eee;
+            background: white;
+        }
+        .go_back{
+            width: 15px;
+            height: 25px;
+            display: inline-block;
+            background:  url(images/goback.png) no-repeat;
+            background-size: cover;
+            margin-top:10px;
+            float:left;
+            margin-left:10px;
+
+
+
+        }
+        .kb{display: inline-block;
+            font-size:18px;
+            line-height: 40px;
+            width:86%;
+            text-align: center;
+            position: relative;
+            top:-5px;
+        }
+
+        .bd .search_bg{
+            background: #dedede26;
+            height:105px;
+            width:100%;
+            position: relative;
+            top:133px;
+            padding:5px 10px 10px 10px ;
+        }
+        .search_bg .search_icon{
+            position: absolute;
+            display: inline-block;
+            height:36px;
+            width:24px;
+            background: url("images/search_icon.png")no-repeat;
+            background-size: contain;
+            top: 15px;
+            left: 18px;
+
+        }
+        .search_bg .src_box{
+            line-height: 30px;
+            padding:3px;
+            padding-left:32px;
+            border: 1px solid #e5e5e5;
+            border-radius: 5px;
+            font-size: 18px;
+            width:70%;
+            outline: none;
+        }
+        .search_bg .search_btn{
+            height:40px;
+            line-height: 40px;
+            font-size:20px;
+            font-weight: bold;
+            width:60px;
+            border-radius: 5px;
+            text-align: center;
+            color: #959595;
+            background: #e5e5e5;
+        }
+        .search_bg .search_btns{
+            background: #2ba2fa;
+            color: #fff;
+        }
+        /*点击前*/
+        .bd .hot_search_bg{
+            margin-top:134px;
+        }
+        .bd .hot_search_bg .near_hot{
+                line-height: 40px;
+                font-size:16px;
+                color: #2ca3f5;
+                padding:10px 10px 10px 20px;
+                border-bottom:1px solid #a7a7a7;
+        }
+
+        .bd .hot_search_bg ul{
+            padding:0 10px 0 10px;
+        }
+        .bd .hot_search_bg li{
+            line-height: 50px;
+            border-bottom:1px solid #a7a7a7;
+            font-size:20px ;
+            padding:10px;
+        }
+        .bd .hot_search_bg li:last-child{
+            border-bottom:none;
+        }
+        /*点击abc后*/
+        .bd .hot_search_bgs{
+            margin-top:134px;
+            display: none;
+        }
+        .bd .hot_search_bgs .results_num{
+            line-height: 30px;
+            font-size:16px;
+            padding:0 0 0 20px;
+            color: #5d5d5d;
+            background: #e6e6e6;
+        }
+        .bd .hot_search_bgs ul{
+            padding:0 10px 0 10px;
+        }
+        .bd .hot_search_bgs li{
+
+            border-bottom:1px solid #a7a7a7;
+            font-size:20px ;
+            padding:20px 10px 20px 10px ;
+        }
+        .bd .hot_search_bgs li:last-child{
+            border-bottom:none;
+        }
+        .icon{
+            width: .5357rem;
+            height: .5814rem;
+            display: inline-block;
+            background: url(images/download_icon_2.png) no-repeat;
+            background-size: 100%;
+            float:right;
+            margin-top:8px;
+        }
+        .bd .hot_search_bgs li .message{
+          display: inline-block;
+           font-size:18px;
+            width:89%;
+
+        }
+
+        .icon_load{
+            float:right;
+        }
+
+        /*音乐播放器*/
+        #uplay{
+            display: none;
+            position: relative;
+        }
+        .user_play{
+            height:80px;
+            width:100%;
+            background:rgba(0,0,0,.8);
+            position: fixed;
+            bottom:0;
+        }
+        .user_play .user_img{
+            height:80px;
+            width:74px;
+            float:left;
+            padding: 5px;
+
+        }
+        .user_img img{
+            height:100%;
+            width:100%;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+        }
+
+        .songName_box{
+            float:left;
+            margin-left:5px;
+            height:inherit;
+            padding-top:15px;
+        }
+        .songName_box p{
+            color:#fff;
+            font-size:16px;
+            line-height: 30px;
+        }
+        .songName_box .singerName{
+            font-size:12px;
+            color: #d0d0d0;
+        }
+        .icon_box{
+            float:right;
+            height:80px;
+            width:150px;
+            padding: 18px 0 0 10px;
+            position: absolute;
+            right: 0;
+
+        }
+
+        .icon_box i{
+            display: inline-block;
+            height:40px;
+            width:38px;
+
+        }
+        .icon_box .play_icon{
+            background: url("images/pause_icon.png")no-repeat;
+            background-size:100%;
+        }
+        .icon_box .pause_icon{
+            background: url("images/play_icon.png")no-repeat;
+            background-size:100%;
+        }
+
+        .icon_box .next_icon{
+            background:  url("images/next_icon.png")no-repeat;
+            background-size:100%;
+        }
+        .icon_box .download_icon{
+            background:url("images/download_icon.png")no-repeat;
+            background-size:100%;
+        }
+
+    </style>
+</head>
+<body>
+<div class="hearder_top" id="header_top">
+    <v-header></v-header>
+</div>
+<script src="javascripts/header.js"></script>
+
+<div class="bd" id="bd">
+    <div class="wt">
+        <i class="go_back" onclick="history.go(-1)"></i>
+        <p class="kb">搜索</p>
+    </div>
+    <div  id="search">
+        <div class="search_bg" >
+            <i class="search_icon"></i>
+            <input type="text" v-model.lazy="mts" class="src_box" placeholder="歌手/歌名/拼音"/>
+            <div class="search_btn" v-on:click="search">搜索</div>
+        </div>
+        <div class="hot_search_bg">
+            <div class="near_hot">最近热门</div>
+            <ul>
+                <li v-for="lis in hotDatas"><a href="javascript:;" v-text="lis.keyword" v-on:click="abc(lis.keyword)"></a></li>
+            </ul>
+        </div>
+
+        <div class="hot_search_bgs" >
+            <div class="results_num">共有{{dts}}条搜索结果</div>
+            <ul>
+                <li v-for="lis in listData">
+                    <div class="message">
+                        <span v-on:click="uPlay(lis.hash)" >{{lis.singername}}-{{lis.songname}}</span>
+                    </div>
+                    <div class="icon_load">
+                        <i class="icon"></i>
+                    </div>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<!--播放器 uplay-->
+<div id="uplay">
+    <div class="user_play">
+        <div class="user_img">
+            <img :src="Song.imgUrl|replace"/>
+        </div>
+        <div class="songName_box">
+            <p class="songName" v-text="Song.songName"></p>
+            <p class="singerName" v-text="Song.choricSinger"></p>
+        </div>
+        <div class="icon_box">
+            <i class="play_icon"></i>
+            <i class="next_icon"></i>
+            <i class="download_icon"></i>
+            <audio :src="Song.url" autoplay></audio>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    $.ajax({
+        url:"/ma",
+        data:{urls:"http://mobilecdn.kugou.com/api/v3/search/hot?format=json&plat=0&count=8"},
+        success:function(data){
+                console.log(data);
+            var SongData={Song:{choricSinger:"",imgUrl:"",songName:"",url:""}};
+            new Vue({
+                el:"#bd",
+                data:{hotDatas:data.data.info,mts:"",dts:"",listData:""},
+                methods:{
+                    abc:function(kd) {
+                        console.log(kd);
+                        this.mts=kd; //将点击的曲目添加到搜索框
+                        $(".hot_search_bg").hide();
+                        $(".hot_search_bgs").show();
+                    },
+                    search:function(){
+                        $(".hot_search_bg").hide();
+                        $(".hot_search_bgs").show();
+                    },
+                    uPlay:function(da){
+                        console.log(da);
+                        //将获取到的歌曲播放hash值，通过ajax传给播放器audio
+                        $.ajax({
+                            url:"/ma",
+                            data:{urls:"http://m.kugou.com/app/i/getSongInfo.php?cmd=playInfo&hash="+da},
+                            success:function(dt){
+                                console.log(dt);
+                                SongData.Song=dt;//把歌曲信息存如SongData.song中
+                                $("#uplay").show();
+                                $(".play_icon").removeClass("pause_icon");
+                            }
+                        })
+                    }
+                },
+                watch:{
+                    mts:function(){
+                        var _this_=this;
+                            /*值变化时，让搜索按钮背景变蓝*/
+                        $(".search_btn").addClass("search_btns");
+                        console.log(_this_.mts);
+                        $.ajax({
+                                url:"/ma",
+                                data:{urls:"http://mobilecdn.kugou.com/api/v3/search/song?format=json&keyword="+encodeURI(_this_.mts)+"&page=1&pagesize=20&showtype=1"},
+                                success:function(da){
+                                    console.log(da);
+                                    _this_.dts=da.data.total;
+                                    _this_.listData=da.data.info;
+                                }
+                        })
+                    }
+                }
+            });
+            //判断搜索框中是否有值
+            $(".src_box").focus(function(){
+                $(".search_btn").addClass("search_btns")
+            });
+            $(".src_box").blur(function(){
+                if($(".src_box").val()){
+                    $(".search_btn").addClass("search_btns")
+                }else{
+                    $(".search_btn").removeClass("search_btns")
+                }
+            });
+
+            /*音乐播放器*/
+            new Vue({
+                el:"#uplay",
+                data:SongData, //把歌曲信息传入 uplay视图中
+                filters:{
+                    replace:function(dts){
+                        return dts.replace("{size}",400)
+                    }
+                }
+            });
+
+            $(".play_icon").click(function(){
+                if($(this).hasClass("pause_icon")){
+                    $(this).removeClass("pause_icon");
+                    $("audio")[0].play();
+                }else{
+                    $("audio")[0].pause();
+                    $(this).addClass("pause_icon");
+                }
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

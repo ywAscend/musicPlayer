@@ -1,0 +1,97 @@
+<html>
+
+<head>
+    <title>Express</title>
+    <link rel="stylesheet" href="/stylesheets/rank.css">
+    <!--引用swiper css样式-->
+    <link rel="stylesheet" href="stylesheets/swiper.min.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="javascripts/jquery-3.3.1.js"></script>
+    <script src="javascripts/vue.js"></script>
+    <!--引用swiper js文件-->
+    <script src="javascripts/swiper.min.js"></script>
+    <style>
+        /*数据加载*/
+        .circle_icon{
+            height:50px;
+            line-height: 50px;
+            width:150px;
+            font-size: 14px;
+            position: absolute;
+            top:315px;
+            z-index: 1;
+            left:120px;
+        }
+
+        .circle_icon img{
+            position: relative;
+            top:10px;
+            margin-right: 10px;
+        }
+        .cur{
+            border-bottom: .2143rem solid #33a3f5;
+        }
+    </style>
+
+</head>
+
+<body>
+<div class="hearder_top" id="header_top">
+    <v-header></v-header>
+    <v-main></v-main>
+</div>
+
+<script src="javascripts/header.js"></script>
+<div id="app" >
+    <!--排行榜列表-->
+    <ul class="list" id="list"> <!--给list加id 在下面让vue-实例绑定-->
+        <li v-for="lis in listData">
+            <a :href="'/info.html?rankid='+lis.rankid" class="ig"><img :src="lis.banner7url|replace"/></a>
+            <span v-text="lis.rankname"></span>
+            <i class="icon"></i>
+        </li>
+    </ul>
+
+</div>
+<div class="circle_icon"><img src="images/5-121204193R5-50.gif" alt=""/><span>数据加载中...</span></div>
+<script>
+    $(".list").hide();
+    //1.获取排行榜数据
+    $.ajax({
+        url:"/ma",
+        data:{urls:"http://m.kugou.com/rank/list&json=true"},
+        success:function(data){
+            $(".circle_icon").hide();
+            $(".list").show();
+            console.log(data);//获取音乐接口数据
+            //加载vue实例
+            new Vue({
+                el:"#app",
+                data:{listData:data.rank.list}, // data.data里面包含新歌的列表
+                filters:{
+                    replace:function(dt){
+                        return dt.replace("{size}",400);
+                    }
+                }
+
+            })
+
+        }
+
+    });
+
+
+
+
+</script>
+
+
+<script>
+
+
+
+</script>
+</body>
+
+
+</html>
